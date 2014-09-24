@@ -1,0 +1,48 @@
+<template name="admin">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+      {{#each questions}}
+        {{> updateQuestion}}
+      {{/each}}
+
+      {{#if insert}}
+        {{> insertQuestion insert}}
+      {{/if}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="updateQuestion">
+  {{#autoForm collection="App.Questions" id=_id doc=this type="update"}}
+  <fieldset>
+    <legend>Question {{index}}</legend>
+    {{> afQuickField name='label'}}
+    {{> afQuickField name='type' options=typeOptions}}
+    <div>
+      <button type="submit" class="btn btn-default">Update</button>
+      <button class="remove btn btn-danger">Remove</button>
+    </div>
+  </fieldset>
+  {{/autoForm}}
+  <br>
+  <br>
+</template>
+
+<template name="insertQuestion">
+  {{#autoForm collection="App.Questions" id="insertQuestion" type="insert"}}
+  <fieldset>
+    <legend>Question {{index}}</legend>
+    {{> afQuickField name='label'}}
+    {{> afQuickField name='type' options=typeOptions}}
+    {{> afFieldInput name='regEx' type='hidden'}}
+    <div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="reset" class="btn btn-default">Reset</button>
+    </div>
+  </fieldset>
+  {{/autoForm}}
+  <br>
+  <br>
+</template>

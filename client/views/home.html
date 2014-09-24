@@ -1,0 +1,46 @@
+<template name="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        {{#if unanswered}}
+          {{#autoForm collection="App.Answers" schema=unanswered.schema type="insert"}}
+          <fieldset>
+            {{> afQuickField name='response'}}
+            {{> afFieldInput name='questionId' type='hidden' value=unanswered._id}}
+            {{> afFieldInput name='userId' type='hidden' value=currentUser._id}}
+            <div>
+              <button type="submit" class="btn btn-primary">Answer</button>
+            </div>
+          </fieldset>
+          {{/autoForm}}
+        {{else}}{{#if answers.count}}
+          <h3>Review</h3>
+          <br>
+          <br>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>Answer</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each answers}}
+              <tr>
+                <td>{{#if question}}{{question.label}}{{else}}<i>question deleted</i>{{/if}}</td>
+                <td>{{response}}</td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+
+          <button class="restart btn btn-success pull-right">Restart</button>
+        {{else}}
+          <h3>No questions yet!</h3>
+          <div class="text-muted">Check back soon, or try the <a href={{pathFor "admin"}}>admin</a> page.</div>
+        {{/if}}{{/if}}
+      </div>
+    </div>
+  </div>
+</template>
+
